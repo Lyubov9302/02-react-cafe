@@ -1,41 +1,21 @@
-import CafeInfo from "../CafeInfo/CafeInfo";
 import css from "./App.module.css";
+import CafeInfo from "../CafeInfo/CafeInfo";
+import Votes from "../../types/votes";
 import { useState } from "react";
-import type { Votes, VoteType } from "../../types/votes.ts";
-import VoteOptions from "../VoteOptions/VoteOptions";
 
 export default function App() {
-  const [votes, setVotes] = useState<Votes>({ good: 0, neutral: 0, bad: 0 });
-  const [isOpen, setIsOpen] = useState(false);
+  const [votes, setVotes] = useState(0);
 
-  const handleVote = (key: keyof Votes) => {
-    setVotes({
-      ...votes,
-      [key]: votes[key] + 1,
-    });
+  const handleVote = () => {
+    setVotes(votes + 1);
   };
-
-  const toggleMessage = () => {
-    setIsOpen(!isOpen);
-  };
-
   return (
     <>
       <div className={css.app}>
         <CafeInfo />
-
-        <VoteOptions
-          onVote={handleVote}
-          onReset={toggleMessage}
-          canReset={true}
-        />
-        <p>
-          good: {votes.good}, neutral: {votes.neutral}, bad: {votes.bad};
-        </p>
-
-        <button onClick={toggleMessage}>
-          {isOpen ? "Hide message" : "Show message"}
-        </button>
+        <button onClick={handleVote}>Good: {votes}</button>;
+        <button onClick={handleVote}>Neutral: {votes}</button>;
+        <button onClick={handleVote}>Bad: {votes}</button>;
       </div>
     </>
   );
