@@ -1,7 +1,9 @@
 import css from "./App.module.css";
 import CafeInfo from "../CafeInfo/CafeInfo";
-import { Votes, VoteType } from "../../types/votes";
+import type { Votes, VoteType } from "../../types/votes";
 import { useState } from "react";
+import VoteOptions from "../VoteOptions/VoteOptions";
+import VoteStats from "../VoteStats/VoteStats";
 
 export default function App() {
   const [votes, setVotes] = useState<Votes>({ good: 0, neutral: 0, bad: 0 });
@@ -20,12 +22,16 @@ export default function App() {
     <>
       <div className={css.app}>
         <CafeInfo />
-        <button onClick={() => handleVote("good")}>Good: {votes.good}</button>
-        <button onClick={() => handleVote("neutral")}>
-          Neutral: {votes.neutral}
-        </button>
-        <button onClick={() => handleVote("bad")}>Bad: {votes.bad}</button>
-        <button onClick={resetVotes}>Reset</button>
+        <VoteOptions
+          onVote={handleVote}
+          onReset={resetVotes}
+          canReset={true}
+        />
+        <VoteStats
+          votes={votes}
+          totalVotes={0}
+          positiveRate={0}
+        />
       </div>
     </>
   );
